@@ -22,8 +22,17 @@ function playRound(playerSelection, computerSelection){
   
 }
 
-function getPlayerChoice(){
-    return prompt("Choose, Rock, Paper or Sciccors");
+function getPlayerChoice(e){
+   if(e == Rock){
+     playerSelection = "Rock"
+     console.log(playerSelection)
+   }else if(e == Paper){
+    playerSelection = "Paper";
+    console.log(playerSelection)
+   }else{
+    playerSelection = "Scissors";
+    console.log(playerSelection)
+   }
 }
 
 function game(){
@@ -49,3 +58,24 @@ function checkWinner(playerScore, computerScore){
   if(computerScore < playerScore) return "Player won!";
   return "Player lose!"
 }
+
+const rockBtn = document.getElementById("rock");
+const paperBtn = document.getElementById("paper");
+const scissorsBtn = document.getElementById("scissors");
+
+rockBtn.attributes
+console.log(rockBtn);
+console.log(paperBtn);
+console.log(scissorsBtn);
+
+rockBtn.addEventListener("click", function(e){
+  getPlayerChoice(e);
+});
+
+paperBtn.addEventListener("click", function(e){
+  getPlayerChoice(e);
+});
+
+scissorsBtn.addEventListener("click", function(e){
+  getPlayerChoice(e);
+});
