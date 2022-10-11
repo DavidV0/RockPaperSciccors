@@ -49,5 +49,3 @@ function checkWinner(playerScore, computerScore){
   if(computerScore < playerScore) return "Player won!";
   return "Player lose!"
 }
-
-game();
