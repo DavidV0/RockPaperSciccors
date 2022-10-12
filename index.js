@@ -3,79 +3,106 @@ let playerSelection = "";
 let computerSelection = "";
 let playerScore = 0;
 let computerScore = 0;
+let div = document.getElementById("div");
 
 
 
 function getComputerChoice(){
     let result = computerChoices[Math.floor(Math.random()* computerChoices.length)];
-    return result;
+    computerSelection =  result.choice;
 }
 
 function playRound(playerSelection, computerSelection){
-  if(playerSelection == computerSelection.choice) {
-    return "it´s a tie";
-  }else if(playerSelection == "Rock" && computerSelection.choice == "Paper" || playerSelection == "Paper" && computerSelection.choice == "Scissors" || playerSelection == "Scissors" && computerSelection.choice == "Rock"  ){
-      return "You Lose!";
+  if(playerSelection == computerSelection) {
+    checkWinnerOfRound("it´s a tie");
+  }else if(playerSelection == "Rock" && computerSelection == "Paper" || playerSelection == "Paper" && computerSelection == "Scissors" || playerSelection == "Scissors" && computerSelection == "Rock"  ){
+    checkWinnerOfRound( "You Lose!");
    } else{
-    return "You won!"
+   checkWinnerOfRound( "You won!");
   }
   
 }
 
 function getPlayerChoice(e){
-   if(e == Rock){
+   if(e == "Rock"){
      playerSelection = "Rock"
-     console.log(playerSelection)
-   }else if(e == Paper){
+   }else if(e == "Paper"){
     playerSelection = "Paper";
-    console.log(playerSelection)
    }else{
     playerSelection = "Scissors";
-    console.log(playerSelection)
    }
 }
 
-function game(){
-
-  for(let i = 0; i<5; i++){
-    computerSelection = getComputerChoice();
-    console.log(computerSelection);
-   playerSelection =  getPlayerChoice();
-   let result =  playRound(playerSelection, computerSelection);
+function checkWinnerOfRound(str){
+   let result = str
    if(result == "it´s a tie"){
     computerScore++;
     playerScore++;
+    getPoints()
+    checkWinner(playerScore, computerScore)
+    console.log("tie")
    }else if(result ==  "You Lose!" ){
     computerScore++;
+    getPoints()
+    checkWinner(playerScore, computerScore)
+    console.log("computer won the round")
    }else{
     playerScore++;
+    getPoints()
+    checkWinner(playerScore, computerScore)
+    console.log("player won the round")
    } 
   }
-  console.log(checkWinner(playerScore, computerScore));
-}
+
 
 function checkWinner(playerScore, computerScore){
-  if(computerScore < playerScore) return "Player won!";
-  return "Player lose!"
+  if(playerScore == 5 || computerScore == 5){
+    if(computerScore < playerScore){
+      const winner = document.createElement("p")
+      winner.textContent = "Player won the game!!"
+      div.appendChild(winner);
+    }else{
+      const comp = document.createElement("p")
+      comp.textContent = "Computer won the game!!"
+      div.appendChild(comp);
+    }    
+  }
 }
 
 const rockBtn = document.getElementById("rock");
+
 const paperBtn = document.getElementById("paper");
 const scissorsBtn = document.getElementById("scissors");
+rockBtn.value = "Rock";
+paperBtn.value = "Paper";
+scissorsBtn.value = "Scissors";
 
-rockBtn.attributes
-console.log(rockBtn);
-console.log(paperBtn);
-console.log(scissorsBtn);
 
-rockBtn.addEventListener("click", function(e){
-  getPlayerChoice(e);
-});
+rockBtn.addEventListener( "click", (rockBtn) => {
+  {
+   getComputerChoice();
+   getPlayerChoice(rockBtn.value);
+   playRound(playerSelection, computerSelection)
+}});
 
-paperBtn.addEventListener("click", function(e){
-  getPlayerChoice(e);
-});
+paperBtn.addEventListener( "click", (paperBtn) => {
+  {
+    getComputerChoice();
+    getPlayerChoice(paperBtn.value);
+    playRound(playerSelection, computerSelection)
+}});
 
-scissorsBtn.addEventListener("click", function(e){
-  getPlayerChoice(e);
-});
+scissorsBtn.addEventListener( "click", (scissorsBtn) => {
+  {
+   getComputerChoice();
+   getPlayerChoice(scissorsBtn.value);
+   playRound(playerSelection, computerSelection)
+}});
+
+let playerPoints = document.getElementById("playerPoints");
+let computerPoints = document.getElementById("computerPoints");
+
+function getPoints(){
+  playerPoints.textContent = "Player points: " + playerScore;
+  computerPoints.textContent = "Computer points: " + computerScore;
+}
